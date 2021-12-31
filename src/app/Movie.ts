@@ -1,8 +1,8 @@
 export interface Movie {
-  MovieId: number;
-  Caption: string;
-  ReleaseYear: number;
-  MovieLength: number;
-  InsertDate: Date;
-  DeleteDate: Date;
+  movieId: number;
+  caption: string;
+  releaseYear: number;
+  movieLength: number;
+  insertDate: Date;
+  deleteDate: Date;
 }
