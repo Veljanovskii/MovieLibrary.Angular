@@ -15,9 +15,9 @@ export class MovieService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getMovies(sort: string, order: SortDirection, page: number): Observable<MoviesCount> {
+  getMovies(sort: string, order: SortDirection, page: number, size:number): Observable<MoviesCount> {
     const href = 'https://localhost:44371/api/Movie';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${ page + 1 }`;
+    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page}&size=${size}`;
 
     return this._httpClient.get<MoviesCount>(requestUrl);
   }
