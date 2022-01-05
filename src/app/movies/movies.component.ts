@@ -1,10 +1,11 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MovieService } from '../movie.service';
-import { catchError, merge, startWith, switchMap, of as observableOf, map } from 'rxjs';
+import { catchError, merge, startWith, switchMap, of as observableOf, map, filter, debounceTime } from 'rxjs';
 import { Movie } from '../Movie';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-movies',
@@ -14,6 +15,7 @@ import { Movie } from '../Movie';
 export class MoviesComponent implements AfterViewInit {
   displayedColumns: string[] = ['Caption', 'Release', 'Length', 'Insert', 'Options'];
   data: Movie[] = [];
+  search = new FormControl('');
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -27,7 +29,7 @@ export class MoviesComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)))
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -36,7 +38,8 @@ export class MoviesComponent implements AfterViewInit {
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex,
-            this.paginator.pageSize
+            this.paginator.pageSize,
+            this.search.value
           ).pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
@@ -52,5 +55,7 @@ export class MoviesComponent implements AfterViewInit {
         }),
       )
       .subscribe(data => (this.data = data));
+
+
   }
 }

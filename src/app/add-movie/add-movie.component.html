@@ -1,0 +1,13 @@
+<form [formGroup]="addForm" (ngSubmit)="addMovie()">
+
+  <label for="first-name">Caption: </label>
+  <input id="first-name" type="text" formControlName="caption">
+
+  <label for="last-name">Release Year: </label>
+  <input id="last-name" type="text" formControlName="releaseYear">
+
+  <label for="last-name">Movie Length: </label>
+  <input id="last-name" type="text" formControlName="movieLength">
+
+  <button type="submit" [disabled]="!addForm.valid">Submit</button>
+</form>

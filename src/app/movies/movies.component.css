@@ -101,8 +101,8 @@ table {
 .mat-column-Insert {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 27% !important;
-  width: 27% !important;
+  flex: 0 0 22% !important;
+  width: 22% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -117,8 +117,8 @@ table {
 .mat-column-Options {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 15% !important;
-  width: 15% !important;
+  flex: 0 0 20% !important;
+  width: 20% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -128,4 +128,56 @@ table {
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+.e-form-field {
+  width: 200px;
+  margin: 2%;
+}
+
+.mat-form-field-label {
+  color: black !important;
+}
+
+#buttonx {
+  background-color: rgba(245, 245, 245, 0.15);
+  border: none;
+  border-color: white;
+}
+
+#addMovie {
+  margin-left: 2% !important;
+  margin-top: 5% !important;
+  margin-bottom: 5% !important;
+  background-color: #3f525c;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  width: 200px;
+  min-width: 70px;
+  min-height: 36px;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+
+  /* flexbox */
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+}
+
+#editMovie {
+  background-color:rgba(208, 241, 20, 0.863);
+  color: white !important;
+  margin: 2%;
+}
+
+#deleteMovie {
+  background-color: rgba(214, 11, 11, 0.877);
+  color: white !important;
+  margin: 2%;
 }
