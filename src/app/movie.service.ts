@@ -10,6 +10,8 @@ import { MoviesCount } from './MoviesCount';
 })
 export class MovieService {
 
+  private moviesUrl = 'https://localhost:44371/api/Movie';
+
   constructor(private _httpClient: HttpClient) { }
 
   httpOptions = {
@@ -17,18 +19,15 @@ export class MovieService {
   };
 
   getMovies(sort: string, order: SortDirection, page: number, size:number, search:string): Observable<MoviesCount> {
-    const href = 'https://localhost:44371/api/Movie';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page}&size=${size}&search=${search}`;
+    const requestUrl = `${this.moviesUrl}?sort=${sort}&order=${order}&page=${page}&size=${size}&search=${search}`;
 
     return this._httpClient.get<MoviesCount>(requestUrl);
   }
 
   addMovie(movie: Movie): Observable<Movie> {
-    const href = 'https://localhost:44371/api/Movie';
-
     movie.insertDate = new Date();
     console.warn(movie);
 
-    return this._httpClient.post<Movie>(href, movie, this.httpOptions);
+    return this._httpClient.post<Movie>(this.moviesUrl, movie, this.httpOptions);
   }
 }
