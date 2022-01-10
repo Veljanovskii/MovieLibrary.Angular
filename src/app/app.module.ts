@@ -18,13 +18,15 @@ import { UsersComponent } from './users/users.component';
 import { MoviesComponent } from './movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddMovieComponent } from './add-movie/add-movie.component';
+import { EditMovieComponent } from './edit-movie/edit-movie.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     MoviesComponent,
-    AddMovieComponent
+    AddMovieComponent,
+    EditMovieComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { MovieService } from '../movie.service';
-import { catchError, merge, startWith, switchMap, of as observableOf, map, filter, debounceTime } from 'rxjs';
+import { catchError, merge, startWith, switchMap, of as observableOf, map, filter, debounceTime, Subject, Observable } from 'rxjs';
 import { Movie } from '../Movie';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ export class MoviesComponent implements AfterViewInit {
   displayedColumns: string[] = ['Caption', 'Release', 'Length', 'Insert', 'Options'];
   data: Movie[] = [];
   search = new FormControl('');
-  mov: Movie;
+  @Output() add: EventEmitter<any> = new EventEmitter();
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -32,7 +32,7 @@ export class MoviesComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.dialog.afterAllClosed)
+    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.add)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -63,12 +63,13 @@ export class MoviesComponent implements AfterViewInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddMovieComponent, {
       width: '375px',
+      //data: {caption: this.data[0].caption, movieLength: this.data[0].movieLength},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.mov = result;
-      console.log(this.mov);
+      if(result == true) {
+        this.add.emit(null);
+      }
     });
   }
 

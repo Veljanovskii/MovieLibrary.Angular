@@ -1,33 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, forwardRef, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MovieService } from '../movie.service';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { Movie } from '../Movie';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 @Component({
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
-  styleUrls: ['./add-movie.component.css']
+  styleUrls: ['./add-movie.component.css'],
 })
 export class AddMovieComponent implements OnInit {
   addForm: FormGroup;
+  movie = <Movie>{};
 
   constructor(private movieService: MovieService, public dialogRef: MatDialogRef<AddMovieComponent>) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
       caption: new FormControl('', [Validators.required]),
-      releaseYear: new FormControl(new Date().getFullYear, [Validators.required]),
+      releaseYear: new FormControl('', [Validators.required]),
       movieLength: new FormControl('', [Validators.required])
     });
   }
 
   addMovie() {
-    this.movieService.addMovie(this.addForm.value).subscribe();
-  }
+    this.movie.caption = this.addForm.controls['caption'].value;
+    this.movie.releaseYear = this.addForm.controls['releaseYear'].value.getFullYear();
+    this.movie.movieLength = this.addForm.controls['movieLength'].value;
+    this.movie.insertDate = new Date();
 
-  onCancelClick(): void {
-    this.dialogRef.close();
+    this.movieService.addMovie(this.movie).subscribe();
   }
 
   getCaptionErrorMessage() {
