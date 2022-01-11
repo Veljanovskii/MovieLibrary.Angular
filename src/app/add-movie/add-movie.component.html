@@ -4,21 +4,22 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Caption</mat-label>
-      <input matInput formControlName="caption" required>
+      <input matInput formControlName="caption">
       <mat-error *ngIf="addForm.controls['caption'].invalid">{{getCaptionErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Release year</mat-label>
-      <input  matInput [matDatepicker]="picker" formControlName="releaseYear" required readonly>
+      <input matInput formControlName="releaseYear" readonly>
+      <input [matDatepicker]="picker" type="hidden">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker startView="multi-year" panelClass="example-month-picker"></mat-datepicker>
+      <mat-datepicker #picker startView="multi-year" (yearSelected)="chosenYearHandler($event, picker)" panelClass="example-month-picker"></mat-datepicker>
       <mat-error *ngIf="addForm.controls['releaseYear'].invalid">{{getReleaseErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Movie Length</mat-label>
-      <input matInput formControlName="movieLength" required>
+      <input matInput formControlName="movieLength">
       <mat-error *ngIf="addForm.controls['movieLength'].invalid">{{getLengthErrorMessage()}}</mat-error>
     </mat-form-field>
 

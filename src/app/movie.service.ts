@@ -30,7 +30,14 @@ export class MovieService {
   }
 
   addMovie(movie: Movie): Observable<Movie> {
-    //return this._httpClient.post<Movie>(this.moviesUrl, movie, this.httpOptions);
-    return new Observable<Movie>();
+    movie.insertDate = new Date();
+    //return new Observable<Movie>();
+    return this._httpClient.post<Movie>(this.moviesUrl, movie, this.httpOptions);
+  }
+
+  deleteMovie(id: number): Observable<Movie> {
+    const target = `${this.moviesUrl}/${id}`;
+
+    return this._httpClient.delete<Movie>(target, this.httpOptions);
   }
 }

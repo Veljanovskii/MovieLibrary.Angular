@@ -2,9 +2,9 @@ import { Component, forwardRef, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MovieService } from '../movie.service';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { Movie } from '../Movie';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-add-movie',
@@ -26,12 +26,12 @@ export class AddMovieComponent implements OnInit {
   }
 
   addMovie() {
-    this.movie.caption = this.addForm.controls['caption'].value;
-    this.movie.releaseYear = this.addForm.controls['releaseYear'].value.getFullYear();
-    this.movie.movieLength = this.addForm.controls['movieLength'].value;
-    this.movie.insertDate = new Date();
+    this.movieService.addMovie(this.addForm.value).subscribe();
+  }
 
-    this.movieService.addMovie(this.movie).subscribe();
+  chosenYearHandler(any: Date, datepicker: MatDatepicker<any>) {
+    this.addForm.controls['releaseYear'].setValue(any.getFullYear());
+    datepicker.close();
   }
 
   getCaptionErrorMessage() {

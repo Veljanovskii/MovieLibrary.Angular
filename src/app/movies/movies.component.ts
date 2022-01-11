@@ -18,7 +18,7 @@ export class MoviesComponent implements AfterViewInit {
   displayedColumns: string[] = ['Caption', 'Release', 'Length', 'Insert', 'Options'];
   data: Movie[] = [];
   search = new FormControl('');
-  @Output() add: EventEmitter<any> = new EventEmitter();
+  @Output() restMethod: EventEmitter<any> = new EventEmitter();
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -32,7 +32,7 @@ export class MoviesComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.add)
+    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.restMethod)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -68,9 +68,15 @@ export class MoviesComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result == true) {
-        this.add.emit(null);
+        this.restMethod.emit(null);
       }
     });
+  }
+
+  delete(id: number) {
+    this.movieService.deleteMovie(id).subscribe(result => {
+      this.restMethod.emit(null);
+      });
   }
 
 }
