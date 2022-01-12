@@ -1,10 +1,10 @@
-#addMovie {
+#editMovie {
   background-color:rgba(42, 20, 241, 0.863);
   color: white !important;
   margin: 2%;
 }
 
-#addMovie:disabled,
+#editMovie:disabled,
 button[disabled]{
   background-color: #cccccc;
 }

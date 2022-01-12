@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Add a new movie</h1>
+<h1 mat-dialog-title>Edit movie</h1>
 <div mat-dialog-content>
-  <form [formGroup]="addForm" (ngSubmit)="addMovie()">
+  <form [formGroup]="editForm" (ngSubmit)="editMovie()">
 
     <mat-form-field appearance="fill">
       <mat-label>Caption</mat-label>
       <input matInput formControlName="caption">
-      <mat-error *ngIf="addForm.controls['caption'].invalid">{{getCaptionErrorMessage()}}</mat-error>
+      <mat-error *ngIf="editForm.controls['caption'].invalid">{{getCaptionErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -14,17 +14,17 @@
       <input [matDatepicker]="picker" type="hidden">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker startView="multi-year" (yearSelected)="chosenYearHandler($event, picker)" panelClass="example-month-picker"></mat-datepicker>
-      <mat-error *ngIf="addForm.controls['releaseYear'].invalid">{{getReleaseErrorMessage()}}</mat-error>
+      <mat-error *ngIf="editForm.controls['releaseYear'].invalid">{{getReleaseErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Movie Length</mat-label>
       <input matInput formControlName="movieLength">
-      <mat-error *ngIf="addForm.controls['movieLength'].invalid">{{getLengthErrorMessage()}}</mat-error>
+      <mat-error *ngIf="editForm.controls['movieLength'].invalid">{{getLengthErrorMessage()}}</mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions>
-      <button mat-button color="primary" id="addMovie" type="submit" [disabled]="!addForm.valid" [mat-dialog-close]="true">Submit</button>
+      <button mat-button color="primary" id="editMovie" type="submit" [disabled]="!editForm.valid" [mat-dialog-close]="true">Submit</button>
       <a id="cancel" mat-button [mat-dialog-close] cdkFocusInitial>Cancel</a>
     </div>
 

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, of } from 'rxjs';
@@ -10,6 +10,8 @@ import { MoviesCount } from './MoviesCount';
 })
 export class MovieService {
 
+  private moviesUrl = 'https://localhost:44371/api/Movie';
+
   constructor(private _httpClient: HttpClient) { }
 
   httpOptions = {
@@ -17,18 +19,29 @@ export class MovieService {
   };
 
   getMovies(sort: string, order: SortDirection, page: number, size:number, search:string): Observable<MoviesCount> {
-    const href = 'https://localhost:44371/api/Movie';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page}&size=${size}&search=${search}`;
+    let params = new HttpParams();
+    params = params.append('sort', sort);
+    params = params.append('order', order);
+    params = params.append('page', page);
+    params = params.append('size', size);
+    params = params.append('search', search);
 
-    return this._httpClient.get<MoviesCount>(requestUrl);
+    return this._httpClient.get<MoviesCount>(this.moviesUrl, {params: params});
   }
 
   addMovie(movie: Movie): Observable<Movie> {
-    const href = 'https://localhost:44371/api/Movie';
-
     movie.insertDate = new Date();
-    console.warn(movie);
+    //return new Observable<Movie>();
+    return this._httpClient.post<Movie>(this.moviesUrl, movie, this.httpOptions);
+  }
 
-    return this._httpClient.post<Movie>(href, movie, this.httpOptions);
+  editMovie(movie: Movie): Observable<any> {
+    return this._httpClient.put(this.moviesUrl, movie, this.httpOptions);
+  }
+
+  deleteMovie(id: number): Observable<Movie> {
+    const target = `${this.moviesUrl}/${id}`;
+
+    return this._httpClient.delete<Movie>(target, this.httpOptions);
   }
 }
