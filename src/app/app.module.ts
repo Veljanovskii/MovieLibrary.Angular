@@ -19,6 +19,8 @@ import { MoviesComponent } from './movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddMovieComponent } from './add-movie/add-movie.component';
 import { EditMovieComponent } from './edit-movie/edit-movie.component';
+import { AppRoutingModule } from './app-routing.module';
+import { DeleteMovieComponent } from './delete-movie/delete-movie.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { EditMovieComponent } from './edit-movie/edit-movie.component';
     UsersComponent,
     MoviesComponent,
     AddMovieComponent,
-    EditMovieComponent
+    EditMovieComponent,
+    DeleteMovieComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { EditMovieComponent } from './edit-movie/edit-movie.component';
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

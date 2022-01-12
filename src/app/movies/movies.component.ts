@@ -1,13 +1,14 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort, SortDirection } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MovieService } from '../movie.service';
-import { catchError, merge, startWith, switchMap, of as observableOf, map, filter, debounceTime, Subject, Observable } from 'rxjs';
+import { catchError, merge, startWith, switchMap, of as observableOf, map, debounceTime, Subject } from 'rxjs';
 import { Movie } from '../Movie';
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AddMovieComponent } from '../add-movie/add-movie.component';
+import { EditMovieComponent } from '../edit-movie/edit-movie.component';
+import { DeleteMovieComponent } from '../delete-movie/delete-movie.component';
 
 @Component({
   selector: 'app-movies',
@@ -18,7 +19,7 @@ export class MoviesComponent implements AfterViewInit {
   displayedColumns: string[] = ['Caption', 'Release', 'Length', 'Insert', 'Options'];
   data: Movie[] = [];
   search = new FormControl('');
-  @Output() restMethod: EventEmitter<any> = new EventEmitter();
+  loadMovies: Subject<any> = new Subject();
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -27,12 +28,16 @@ export class MoviesComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private movieService: MovieService, public dialog: MatDialog) { }
+  constructor(
+    private movieService: MovieService,
+    public dialogAdd: MatDialog,
+    public dialogEdit: MatDialog,
+    public dialogDelete: MatDialog) { }
 
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.restMethod)
+    merge(this.sort.sortChange, this.paginator.page, this.search.valueChanges.pipe(debounceTime(800)), this.loadMovies)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -60,23 +65,46 @@ export class MoviesComponent implements AfterViewInit {
       .subscribe(data => (this.data = data));
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(AddMovieComponent, {
+  openAddDialog(): void {
+    const dialogAddRef = this.dialogAdd.open(AddMovieComponent, {
       width: '375px',
-      //data: {caption: this.data[0].caption, movieLength: this.data[0].movieLength},
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogAddRef.afterClosed().subscribe(result => {
       if(result == true) {
-        this.restMethod.emit(null);
+        this.loadMovies.next(null);
       }
     });
   }
 
-  delete(id: number) {
-    this.movieService.deleteMovie(id).subscribe(result => {
-      this.restMethod.emit(null);
-      });
+  openEditDialog(index: number): void {
+    const dialogEditRef = this.dialogEdit.open(EditMovieComponent, {
+      width: '375px',
+      data: {
+        movie: this.data[index],
+      },
+    });
+
+    dialogEditRef.afterClosed().subscribe(result => {
+      if(result == true) {
+        this.loadMovies.next(null);
+      }
+    });
+  }
+
+  openDeleteDialog(id: number): void {
+    const dialogDeleteRef = this.dialogDelete.open(DeleteMovieComponent, {
+      width: '375px',
+      data: {
+        index: id
+      }
+    });
+
+    dialogDeleteRef.afterClosed().subscribe(result => {
+      if(result == true) {
+        this.loadMovies.next(null);
+      }
+    });
   }
 
 }

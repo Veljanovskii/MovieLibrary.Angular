@@ -35,6 +35,10 @@ export class MovieService {
     return this._httpClient.post<Movie>(this.moviesUrl, movie, this.httpOptions);
   }
 
+  editMovie(movie: Movie): Observable<any> {
+    return this._httpClient.put(this.moviesUrl, movie, this.httpOptions);
+  }
+
   deleteMovie(id: number): Observable<Movie> {
     const target = `${this.moviesUrl}/${id}`;
 
