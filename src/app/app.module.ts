@@ -12,15 +12,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
-import { UsersComponent } from './users/users.component';
-import { MoviesComponent } from './movies/movies.component';
+import { UsersComponent } from '../app/user/users/users.component';
+import { MoviesComponent } from '../app/movie/movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddMovieComponent } from './add-movie/add-movie.component';
-import { EditMovieComponent } from './edit-movie/edit-movie.component';
+import { AddMovieComponent } from '../app/movie/add-movie/add-movie.component';
+import { EditMovieComponent } from '../app/movie//edit-movie/edit-movie.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DeleteMovieComponent } from './delete-movie/delete-movie.component';
+import { DeleteMovieComponent } from '../app/movie//delete-movie/delete-movie.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavComponent } from './navigation/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,9 @@ import { DeleteMovieComponent } from './delete-movie/delete-movie.component';
     MoviesComponent,
     AddMovieComponent,
     EditMovieComponent,
-    DeleteMovieComponent
+    DeleteMovieComponent,
+    HeaderComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +54,11 @@ import { DeleteMovieComponent } from './delete-movie/delete-movie.component';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    FlexLayoutModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

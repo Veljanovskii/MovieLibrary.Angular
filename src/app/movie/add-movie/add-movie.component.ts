@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MovieService } from '../movie.service';
-import { Movie } from '../Movie';
+import { MovieService } from '../../movie.service';
+import { Movie } from '../../Movie';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
