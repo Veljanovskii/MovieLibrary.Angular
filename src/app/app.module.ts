@@ -16,17 +16,19 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppComponent } from './app.component';
-import { UsersComponent } from '../app/user/users/users.component';
-import { MoviesComponent } from '../app/movie/movies/movies.component';
+import { UsersComponent } from 'src/app/user/users/users.component';
+import { MoviesComponent } from 'src/app/movie/movies/movies.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddMovieComponent } from '../app/movie/add-movie/add-movie.component';
-import { EditMovieComponent } from '../app/movie//edit-movie/edit-movie.component';
+import { AddMovieComponent } from 'src/app/movie/add-movie/add-movie.component';
+import { EditMovieComponent } from 'src/app/movie/edit-movie/edit-movie.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DeleteMovieComponent } from '../app/movie//delete-movie/delete-movie.component';
+import { DeleteMovieComponent } from 'src/app/movie//delete-movie/delete-movie.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
+import { DialogComponent } from './user/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { SidenavComponent } from './navigation/sidenav/sidenav.component';
     EditMovieComponent,
     DeleteMovieComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { SidenavComponent } from './navigation/sidenav/sidenav.component';
     MatToolbarModule,
     FlexLayoutModule,
     MatListModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
