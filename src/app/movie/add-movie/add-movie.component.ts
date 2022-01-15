@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MovieService } from '../../movie.service';
-import { Movie } from '../../Movie';
+import { MovieService } from 'src/app/movie.service';
+import { Movie } from 'src/app/models/Movie';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
@@ -14,7 +13,7 @@ export class AddMovieComponent implements OnInit {
   addForm: FormGroup;
   movie = <Movie>{};
 
-  constructor(private movieService: MovieService, public dialogRef: MatDialogRef<AddMovieComponent>) { }
+  constructor(private movieService: MovieService) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({

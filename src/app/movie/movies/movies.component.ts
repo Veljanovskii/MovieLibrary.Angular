@@ -1,14 +1,14 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MovieService } from '../../movie.service';
+import { MovieService } from 'src/app/movie.service';
 import { catchError, merge, startWith, switchMap, of as observableOf, map, debounceTime, Subject } from 'rxjs';
-import { Movie } from '../../Movie';
+import { Movie } from 'src/app/models/Movie';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { AddMovieComponent } from '../add-movie/add-movie.component';
-import { EditMovieComponent } from '../edit-movie/edit-movie.component';
-import { DeleteMovieComponent } from '../delete-movie/delete-movie.component';
+import { AddMovieComponent } from 'src/app/movie/add-movie/add-movie.component';
+import { EditMovieComponent } from 'src/app/movie/edit-movie/edit-movie.component';
+import { DeleteMovieComponent } from 'src/app/movie/delete-movie/delete-movie.component';
 
 @Component({
   selector: 'app-movies',

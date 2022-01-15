@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MovieService } from '../../movie.service';
-import { Movie } from '../../Movie';
+import { MovieService } from 'src/app/movie.service';
+import { Movie } from 'src/app/models/Movie';
 import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
@@ -33,6 +33,7 @@ export class EditMovieComponent implements OnInit {
     this.movie.caption = this.editForm.controls['caption'].value;
     this.movie.releaseYear = this.editForm.controls['releaseYear'].value;
     this.movie.movieLength = this.editForm.controls['movieLength'].value;
+
     this.movieService.editMovie(this.movie).subscribe();
   }
 
