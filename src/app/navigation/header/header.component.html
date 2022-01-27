@@ -7,7 +7,7 @@
   <div class="navigation-items">
       <a routerLink="">Movie Library</a>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+  <div fxFlex fxLayout fxLayoutAlign="start" fxHide.xs>
       <ul fxLayout fxLayoutGap="15px" class="navigation-items">
           <li>
               <a routerLink="/movies">Movies</a>
@@ -15,6 +15,19 @@
           <li>
               <a routerLink="/users">Users</a>
           </li>
+          <li *ngIf="this.authService.employeeValue">
+            <a routerLink="/employees">Employees</a>
+        </li>
       </ul>
   </div>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+        <li *ngIf="!this.authService.employeeValue">
+            <a routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="this.authService.employeeValue">
+          <a routerLink="/" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+</div>
 </mat-toolbar>

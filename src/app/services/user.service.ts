@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
-import { User } from './models/User';
-import { UsersCount } from './models/UsersCount';
+import { User } from 'src/app/models/User';
+import { UsersCount } from 'src/app/models/UsersCount';
 
 @Injectable({
   providedIn: 'root'

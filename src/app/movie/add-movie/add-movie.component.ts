@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MovieService } from 'src/app/movie.service';
+import { MovieService } from 'src/app/services/movie.service';
 import { Movie } from 'src/app/models/Movie';
 import { MatDatepicker } from '@angular/material/datepicker';
 

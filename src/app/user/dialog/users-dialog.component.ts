@@ -3,21 +3,22 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Actions } from 'src/app/models/Actions';
 import { User } from 'src/app/models/User';
-import { UserService } from 'src/app/user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  selector: 'app-users-dialog',
+  templateUrl: './users-dialog.component.html',
+  styleUrls: ['./users-dialog.component.css']
 })
-export class DialogComponent implements OnInit {
+export class UsersDialogComponent implements OnInit {
   dialogForm: FormGroup;
   action: Actions;
   user = <User>{};
   index: number;
   validStatus: Array<string> = ['Single', 'Married', 'Divorced', 'Widowed'];
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.action = data.action;
 
