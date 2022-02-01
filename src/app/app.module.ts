@@ -18,6 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { JwtHelperService, JWT_OPTIONS } from "@auth0/angular-jwt";
+import { authInterceptorProviders } from 'src/app/interceptors/auth.interceptor';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from 'src/app/user/users/users.component';
@@ -70,9 +72,13 @@ import { EmployeesComponent } from './employee/employees/employees.component';
     FlexLayoutModule,
     MatListModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    authInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

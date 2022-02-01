@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, EMPTY, first } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { EmployeeService } from '../services/employee.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +15,13 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   loading = false;
-  submitted = false;
   errorMessage = '';
 
   constructor(
       private authService: AuthService,
       private route: ActivatedRoute,
       private router: Router) {
-          if (this.authService.employeeValue) {
+          if (this.authService.tokenValid) {
             this.router.navigate(['/']);
         }
   }
@@ -33,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
     if (this.form.invalid) {
       return;
     }
@@ -43,17 +43,14 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe({
             next: () => {
-                // get return url from query parameters or default to home page
                 const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                 this.router.navigateByUrl(returnUrl);
-                console.log(returnUrl);
             },
             error: error => {
                 this.errorMessage = error.error;
                 this.loading = false;
             }
         });
-
   }
 
   isFieldInvalid(field: string) {

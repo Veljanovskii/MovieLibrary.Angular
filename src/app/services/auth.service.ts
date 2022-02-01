@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, catchError, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
-import { Employee } from '../models/Employee';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { TokenInfo } from '../models/TokenInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,29 @@ export class AuthService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private employeeSubject: BehaviorSubject<Employee | null>;
-  public employee: Observable<Employee | null>;
+  private tokenInfo: BehaviorSubject<TokenInfo>
 
-  constructor(private _httpClient: HttpClient, private router: Router) {
-        this.employeeSubject = new BehaviorSubject<Employee | null>(JSON.parse(localStorage.getItem('employee') as string));
-        this.employee = this.employeeSubject.asObservable();
+  constructor(
+    private _httpClient: HttpClient,
+    private router: Router,
+    private jwtHelper: JwtHelperService) {
+        this.tokenInfo = new BehaviorSubject<TokenInfo>(JSON.parse(localStorage.getItem('token') as string));
    }
 
-   public get employeeValue(): Employee | null {
-    return this.employeeSubject.value;
+  public get roleFromToken(): string {
+    let token = localStorage.getItem("token") as string;
+    if(token == null) {
+      return null as any;
+    }
+    let decodedToken = this.jwtHelper.decodeToken(token);
+    let role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    return role;
+  }
+
+  public get tokenValid(): boolean {
+    let token = localStorage.getItem("token") as string;
+    let valid = !this.jwtHelper.isTokenExpired(token);
+    return valid;
   }
 
   login(credentials: any): Observable<any> {
@@ -31,18 +45,16 @@ export class AuthService {
       email: credentials.email,
       password: credentials.password
     }, this.httpOptions).pipe(
-        map(employee => {
-          console.log(employee);
-          localStorage.setItem("employee", JSON.stringify(employee));
-          this.employeeSubject.next(employee);
-          return employee;
+        map(token => {
+          localStorage.setItem("token", JSON.stringify(token));
+          this.tokenInfo.next(token);
+          return token;
       }));
   }
 
   logOut() {
-    console.log(this.employeeValue?.id);
-    localStorage.removeItem('employee');
-    this.employeeSubject.next(null);
+    localStorage.removeItem('token');
+    this.tokenInfo.next(null as any);
     this.router.navigate(['/login']);
   }
 }

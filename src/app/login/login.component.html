@@ -27,7 +27,8 @@
 </p>
 
 <div class="button">
-  <button mat-button color="primary" id="login" type="submit" [disabled]="!form.valid">Login</button>
+  <button mat-button color="primary" id="login" type="submit" [disabled]="!form.valid || this.loading">Login</button>
+  <mat-spinner [diameter]="30" *ngIf="this.loading"></mat-spinner>
 </div>
 
 </form>

@@ -8,10 +8,9 @@ import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './models/Role';
 
 const routes: Routes = [
-  { path: 'movies', component: MoviesComponent },
-  { path: 'users', component: UsersComponent },
-  //{ path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator]} },
-  { path: 'employees', component: EmployeesComponent },
+  { path: 'movies', component: MoviesComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator, Role.User] } },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator, Role.User] } },
+  { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator] } },
   { path: 'login', component: LoginComponent }
 ];
 
