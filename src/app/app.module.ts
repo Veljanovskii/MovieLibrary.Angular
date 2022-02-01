@@ -17,6 +17,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { JwtHelperService, JWT_OPTIONS } from "@auth0/angular-jwt";
+import { authInterceptorProviders } from 'src/app/interceptors/auth.interceptor';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from 'src/app/user/users/users.component';
@@ -28,7 +31,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { DeleteMovieComponent } from 'src/app/movie//delete-movie/delete-movie.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
-import { DialogComponent } from './user/dialog/dialog.component';
+import { UsersDialogComponent } from './user/dialog/users-dialog.component';
+import { EmployeesDialogComponent } from './employee/dialog/employees-dialog.component';
+import { LoginComponent } from './login/login.component';
+import { EmployeesComponent } from './employee/employees/employees.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,10 @@ import { DialogComponent } from './user/dialog/dialog.component';
     DeleteMovieComponent,
     HeaderComponent,
     SidenavComponent,
-    DialogComponent
+    UsersDialogComponent,
+    LoginComponent,
+    EmployeesComponent,
+    EmployeesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +71,14 @@ import { DialogComponent } from './user/dialog/dialog.component';
     MatToolbarModule,
     FlexLayoutModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
+    authInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

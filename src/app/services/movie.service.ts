@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, of } from 'rxjs';
-import { Movie } from './models/Movie';
-import { MoviesCount } from './models/MoviesCount';
+import { Movie } from 'src/app/models/Movie';
+import { MoviesCount } from 'src/app/models/MoviesCount';
 
 @Injectable({
   providedIn: 'root'

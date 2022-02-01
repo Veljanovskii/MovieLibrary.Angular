@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MovieService } from 'src/app/movie.service';
+import { MovieService } from 'src/app/services/movie.service';
 import { catchError, merge, startWith, switchMap, of as observableOf, map, debounceTime, Subject } from 'rxjs';
 import { Movie } from 'src/app/models/Movie';
 import { FormControl } from '@angular/forms';
