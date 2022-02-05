@@ -6,8 +6,10 @@ import { MoviesComponent } from './movie/movies/movies.component'
 import { UsersComponent } from './user/users/users.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { Role } from './models/Role';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'movies', component: MoviesComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator, Role.User] } },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator, Role.User] } },
   { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: { roles: [Role.Administrator] } },
