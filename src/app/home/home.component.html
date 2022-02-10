@@ -1,7 +1,21 @@
 <button mat-raised-button (click)="rentDialog = !rentDialog" id="toggle-linear" class="rent-return">
   {{!rentDialog ? 'Rent movies' : 'Return movies'}}
 </button>
+
 <mat-stepper *ngIf="rentDialog" orientation="vertical" [linear]="isLinear" #stepperRent>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup" (ngSubmit)="checkValidUser()">
+      <ng-template matStepLabel>Please enter your ID number</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>ID number</mat-label>
+        <input matInput formControlName="IDnumber" placeholder="123456789" required>
+      </mat-form-field>
+      <div>
+        <button type="submit" [disabled]="!selectedIDnumber" mat-button>Next</button>
+        <span class="errorMessage">{{this.errorMessage}}</span>
+      </div>
+    </form>
+  </mat-step>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Select movies to rent</ng-template>
@@ -28,21 +42,8 @@
         </ul>
       </div>
       <div>
-        <button [disabled]="!selectedMovies" mat-button (click)="nextRentStep()">Next</button>
-      </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup" (ngSubmit)="checkValidUser()">
-      <ng-template matStepLabel>Please enter your ID number</ng-template>
-      <mat-form-field appearance="fill">
-        <mat-label>ID number</mat-label>
-        <input matInput formControlName="IDnumber" placeholder="123456789" required>
-      </mat-form-field>
-      <div>
         <button mat-button (click)="previousRentStep()">Back</button>
-        <button type="submit" [disabled]="!selectedIDnumber" mat-button>Next</button>
-        <span class="errorMessage">{{this.errorMessage}}</span>
+        <button [disabled]="!selectedMovies" mat-button (click)="nextRentStep()">Next</button>
       </div>
     </form>
   </mat-step>
@@ -83,28 +84,27 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Select movies to return</ng-template>
       <mat-selection-list #selection class="selection">
-        <mat-list-option *ngFor="let movie of fetchedMoviesList">
+        <mat-list-option *ngFor="let movie of fetchedMoviesList" [value]="movie">
           {{movie.caption}}
         </mat-list-option>
       </mat-selection-list>
       <div>
         <button mat-button (click)="previousReturnStep()">Back</button>
-        <button [disabled]="!selectedMovies" mat-button (click)="nextReturnStep()">Next</button>
+        <button [disabled]="!selection.selectedOptions.selected[0]" mat-button (click)="nextReturnStep()">Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <div class="recap">
-      <p>User {{selectedIDnumber}} has selected these movies to rent:</p>
-
-      <ul *ngFor="let movie of selectedMovies">
-        <li>{{movie.caption}}</li>
+      <p>User {{selectedIDnumber}} has selected these movies to return:</p>
+      <ul *ngFor="let movie of selection.selectedOptions.selected">
+        <li>{{movie.value.caption}}</li>
       </ul>
     </div>
     <div>
       <button mat-button (click)="previousReturnStep()">Back</button>
-      <button mat-button (click)="rentMovies()">Rent movies</button>
+      <button mat-button (click)="returnMovies()">Return movies</button>
       <mat-spinner [diameter]="30" *ngIf="this.isLoadingResults"></mat-spinner>
       <span class="errorMessage">{{this.errorMessage}}</span>
       <span class="rentSuccessfull">{{this.rentedSuccessfull}}</span>

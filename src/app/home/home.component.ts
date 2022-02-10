@@ -43,7 +43,7 @@ export class HomeComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.rentMovieService!.getMovies(
-            this.firstFormGroup.controls["search"].value
+            this.firstFormGroup.controls["search"].value, this.selectedIDnumber
           ).pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
@@ -81,7 +81,8 @@ export class HomeComponent implements AfterViewInit {
       return this.secondFormGroup.controls["IDnumber"].value;
     }
 
-    view() {
+     view() {
+    //   console.log(this.selection.selectedOptions.selected);
       // console.log(this.selectedMovies);
       // let unique = Object.values(this.selectedMovies).filter((value, index, self) =>
       //   index === self.findIndex((t) => (
@@ -154,9 +155,10 @@ export class HomeComponent implements AfterViewInit {
       this.rentMovieService.rentMovies(this.selectedMovies, this.selectedIDnumber).subscribe((data) => {
         if(data) {
           this.rentedSuccessfull = "Rent successful!"
-          this.delay(2500).then(() =>
-          this.stepperRent.reset());
-          this.isLoadingResults = false;
+          this.delay(2500).then(() => {
+            this.stepperRent.reset();
+            this.isLoadingResults = false;
+          });
           this.errorMessage = "";
         }
         else {
@@ -170,12 +172,37 @@ export class HomeComponent implements AfterViewInit {
       if(event.selectedIndex == 1) {
         this.getRented();
       }
+      else if (event.selectedIndex == 2) {
+        this.errorMessage = "";
+        this.rentedSuccessfull = "";
+      }
     }
 
     getRented(): void {
       this.rentMovieService!.getRented(this.selectedIDnumber).subscribe((data) => {
         this.fetchedMoviesList = data
-        console.log(data);
+      });
+    }
+
+    returnMovies(): void {
+      this.isLoadingResults = true;
+      let movieList: Movie[] = [];
+      this.selection.selectedOptions.selected.forEach(element => {
+        movieList.push(element.value);
+      });
+      this.rentMovieService.returnMovies(movieList, this.selectedIDnumber).subscribe((data) => {
+        if(data) {
+          this.rentedSuccessfull = "Return successful!"
+          this.delay(2500).then(() => {
+          this.stepperReturn.reset();
+          this.isLoadingResults = false;
+          });
+          this.errorMessage = "";
+        }
+        else {
+          this.errorMessage = "Unable to return.";
+          this.rentedSuccessfull = "";
+        }
       });
     }
 }

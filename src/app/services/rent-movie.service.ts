@@ -16,9 +16,10 @@ export class RentMovieService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getMovies(search: string): Observable<Movie[]> {
+  getMovies(search: string, idNumber: string): Observable<Movie[]> {
     let params = new HttpParams();
     params = params.append('search', search);
+    params = params.append('idNumber', idNumber);
 
     return this._httpClient.get<Movie[]>(this.rentedMoviesUrl + "/Search", {params: params});
   }
@@ -41,5 +42,11 @@ export class RentMovieService {
     let movies = selectedMovies.map(item => item.movieId);
 
     return this._httpClient.post<boolean>(this.rentedMoviesUrl, {movies, selectedIDnumber}, this.httpOptions);
+  }
+
+  returnMovies(selectedMovies: any[], selectedIDnumber: string): Observable<boolean> {
+    let movies = selectedMovies.map(item => item.movieId);
+
+    return this._httpClient.put<boolean>(this.rentedMoviesUrl + "/Return", {movies, selectedIDnumber}, this.httpOptions);
   }
 }
