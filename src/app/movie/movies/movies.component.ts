@@ -16,7 +16,7 @@ import { DeleteMovieComponent } from 'src/app/movie/delete-movie/delete-movie.co
   styleUrls: ['./movies.component.css']
 })
 export class MoviesComponent implements AfterViewInit {
-  displayedColumns: string[] = ['Caption', 'Release', 'Length', 'Insert', 'Options'];
+  displayedColumns: string[] = ['Avatar','Caption', 'Release', 'Length', 'Insert', 'Options'];
   data: Movie[] = [];
   search = new FormControl('');
   loadMovies: Subject<any> = new Subject();
@@ -67,7 +67,7 @@ export class MoviesComponent implements AfterViewInit {
 
   openAddDialog(): void {
     const dialogAddRef = this.dialogAdd.open(AddMovieComponent, {
-      width: '375px',
+      width: '600px',
     });
 
     dialogAddRef.afterClosed().subscribe(result => {
@@ -79,7 +79,7 @@ export class MoviesComponent implements AfterViewInit {
 
   openEditDialog(index: number): void {
     const dialogEditRef = this.dialogEdit.open(EditMovieComponent, {
-      width: '375px',
+      width: '600px',
       data: {
         movie: this.data[index],
       },

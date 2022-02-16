@@ -2,7 +2,7 @@
   {{!rentDialog ? 'Rent movies' : 'Return movies'}}
 </button>
 
-<mat-stepper *ngIf="rentDialog" orientation="vertical" [linear]="isLinear" #stepperRent>
+<mat-stepper *ngIf="rentDialog" orientation="vertical" [linear]="isLinear" #stepperRent (selectionChange)="onRentStepChange($event)">
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup" (ngSubmit)="checkValidUser()">
       <ng-template matStepLabel>Please enter your ID number</ng-template>
@@ -48,7 +48,7 @@
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
+    <ng-template matStepLabel>Summary</ng-template>
     <div class="recap">
       <p>User {{selectedIDnumber}} has selected these movies to rent:</p>
 
@@ -66,7 +66,7 @@
   </mat-step>
 </mat-stepper>
 
-<mat-stepper *ngIf="!rentDialog" orientation="vertical" [linear]="isLinear" #stepperReturn (selectionChange)="onStepChange($event)">
+<mat-stepper *ngIf="!rentDialog" orientation="vertical" [linear]="isLinear" #stepperReturn (selectionChange)="onReturnStepChange($event)">
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup" (ngSubmit)="checkValidUser()">
       <ng-template matStepLabel>Please enter your ID number</ng-template>
@@ -95,7 +95,7 @@
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
+    <ng-template matStepLabel>Summary</ng-template>
     <div class="recap">
       <p>User {{selectedIDnumber}} has selected these movies to return:</p>
       <ul *ngFor="let movie of selection.selectedOptions.selected">

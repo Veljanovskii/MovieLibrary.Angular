@@ -58,7 +58,6 @@ export class HomeComponent implements AfterViewInit {
         }),
       )
       .subscribe(data => {
-
         this.fetchedMoviesList = data;
 
         if(this.selectedMovies) {
@@ -82,7 +81,6 @@ export class HomeComponent implements AfterViewInit {
     }
 
      view() {
-    //   console.log(this.selection.selectedOptions.selected);
       // console.log(this.selectedMovies);
       // let unique = Object.values(this.selectedMovies).filter((value, index, self) =>
       //   index === self.findIndex((t) => (
@@ -168,7 +166,14 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    onStepChange(event: any): void {
+    onRentStepChange(event: any): void {
+      if (event.selectedIndex == 2) {
+        this.errorMessage = "";
+        this.rentedSuccessfull = "";
+      }
+    }
+
+    onReturnStepChange(event: any): void {
       if(event.selectedIndex == 1) {
         this.getRented();
       }

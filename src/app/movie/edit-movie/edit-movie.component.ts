@@ -13,6 +13,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 export class EditMovieComponent implements OnInit {
   editForm: FormGroup;
   movie: Movie;
+  message: string;
+
 
   constructor(
     private movieService: MovieService,
@@ -25,14 +27,36 @@ export class EditMovieComponent implements OnInit {
     this.editForm = new FormGroup({
       caption: new FormControl(this.movie.caption, [Validators.required]),
       releaseYear: new FormControl(this.movie.releaseYear, [Validators.required]),
-      movieLength: new FormControl(this.movie.movieLength, [Validators.required])
+      movieLength: new FormControl(this.movie.movieLength, [Validators.required]),
+      quantity: new FormControl(this.movie.quantity, [Validators.required])
     });
+  }
+
+  onChange(event: any) {
+    const files = event.target.files;
+    if (files.length === 0)
+        return;
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+        this.message = "Only images are supported.";
+        return;
+    }
+
+    this.message = "";
+
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+        this.movie.avatar = reader.result as string;
+    }
   }
 
   editMovie() {
     this.movie.caption = this.editForm.controls['caption'].value;
     this.movie.releaseYear = this.editForm.controls['releaseYear'].value;
     this.movie.movieLength = this.editForm.controls['movieLength'].value;
+    this.movie.quantity = this.editForm.controls['quantity'].value;
 
     this.movieService.editMovie(this.movie).subscribe();
   }
@@ -66,4 +90,11 @@ export class EditMovieComponent implements OnInit {
     return this.editForm.hasError('') ? 'You must enter a value' : '';
   }
 
+  getQuantityErrorMessage() {
+    if (this.editForm.controls['quantity'].hasError('required')) {
+      return 'You must enter Movie quantity';
+    }
+
+    return this.editForm.hasError('') ? 'You must enter a value' : '';
+  }
 }
