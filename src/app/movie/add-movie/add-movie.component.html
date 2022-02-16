@@ -23,6 +23,23 @@
       <mat-error *ngIf="addForm.controls['movieLength'].invalid">{{getLengthErrorMessage()}}</mat-error>
     </mat-form-field>
 
+    <mat-form-field appearance="fill">
+      <mat-label>Quantity</mat-label>
+      <input matInput formControlName="quantity">
+      <mat-error *ngIf="addForm.controls['quantity'].invalid">{{getQuantityErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <div class="container">
+      <div class="input-container">
+        <input class="form-control" type="file"
+                (change)="onChange($event)">
+      </div>
+      <div class="image-container">
+        <img *ngIf="movie.avatar" src={{movie.avatar}}>
+        <p>{{message}}</p>
+      </div>
+    </div>
+
     <div mat-dialog-actions>
       <button mat-button color="primary" id="addMovie" type="submit" [disabled]="!addForm.valid" [mat-dialog-close]="true">Submit</button>
       <a id="cancel" mat-button [mat-dialog-close] cdkFocusInitial>Cancel</a>

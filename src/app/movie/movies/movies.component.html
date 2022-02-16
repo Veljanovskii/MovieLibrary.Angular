@@ -25,6 +25,12 @@
     <table mat-table [dataSource]="data" class=""
            matSort matSortActive="Id" matSortDisableClear matSortDirection="desc">
 
+    <!-- Avatar Column -->
+    <ng-container matColumnDef="Avatar">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>  </th>
+      <td mat-cell *matCellDef="let element"> <img class="small-preview" src={{element.avatar}}>  </td>
+    </ng-container>
+
       <!-- Caption Column -->
     <ng-container matColumnDef="Caption">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Caption </th>

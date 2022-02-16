@@ -1,0 +1,37 @@
+.mat-stepper-vertical {
+  margin: 4%;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+
+.recap {
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.selection {
+  margin-top: 3%;
+  margin-bottom: 3%;
+  width: 90%;
+}
+
+.errorMessage {
+  margin: 1%;
+  color: red;
+}
+
+.rentSuccessfull {
+  margin: 1%;
+  color: green;
+}
+
+.rent-return {
+  margin-top: 4%;
+  margin-left: 4%;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+  pointer-events: none !important;
+}
