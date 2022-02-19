@@ -30,6 +30,7 @@ export class UserService {
   }
 
   addUser(user: User): Observable<User> {
+    user.insertDate = new Date();
     return this._httpClient.post<User>(this.usersUrl, user, this.httpOptions);
   }
 

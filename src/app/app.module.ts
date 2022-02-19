@@ -20,6 +20,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { JwtHelperService, JWT_OPTIONS } from "@auth0/angular-jwt";
 import { authInterceptorProviders } from 'src/app/interceptors/auth.interceptor';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from 'src/app/user/users/users.component';
@@ -35,6 +38,7 @@ import { UsersDialogComponent } from './user/dialog/users-dialog.component';
 import { EmployeesDialogComponent } from './employee/dialog/employees-dialog.component';
 import { LoginComponent } from './login/login.component';
 import { EmployeesComponent } from './employee/employees/employees.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,8 @@ import { EmployeesComponent } from './employee/employees/employees.component';
     UsersDialogComponent,
     LoginComponent,
     EmployeesComponent,
-    EmployeesDialogComponent
+    EmployeesDialogComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,9 @@ import { EmployeesComponent } from './employee/employees/employees.component';
     MatListModule,
     MatSelectModule,
     MatCardModule,
+    MatStepperModule,
+    NgxMatSelectSearchModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

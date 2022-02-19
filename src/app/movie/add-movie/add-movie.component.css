@@ -23,8 +23,26 @@ mat-form-field {
 }
 
 mat-form-field {
-  margin: 5%;
-  padding-left: 5%;
+  margin: 2%;
+}
+
+img {
+  width: 133px;
+  height: 200px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-container {
+  padding-left: 3%;
+}
+
+.image-container {
+  padding-right: 6%;
 }
 
 .mat-dialog-content {

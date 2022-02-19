@@ -50,11 +50,27 @@ table {
   max-width: 124px;
 }
 
+.mat-column-Avatar {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 6% !important;
+  width: 6% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 .mat-column-Caption {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 28% !important;
-  width: 28% !important;
+  flex: 0 0 22% !important;
+  width: 22% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -181,4 +197,14 @@ table {
   background-color: rgba(214, 11, 11, 0.877);
   color: white !important;
   margin: 2%;
+}
+
+.small-preview {
+  width: 30px;
+  height: 30px;
+}
+
+.small-preview:hover {
+  width: 183px;
+  height: 275px;
 }

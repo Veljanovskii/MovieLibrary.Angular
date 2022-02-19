@@ -13,6 +13,11 @@ mat-form-field {
   width: 250px;
 }
 
+img {
+  width: 133px;
+  height: 200px;
+}
+
 #cancel{
   background-color: #3f525c !important;
   color: white !important;
@@ -23,8 +28,21 @@ mat-form-field {
 }
 
 mat-form-field {
-  margin: 5%;
-  padding-left: 5%;
+  margin: 2%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-container {
+  padding-left: 3%;
+}
+
+.image-container {
+  padding-right: 6%;
 }
 
 .mat-dialog-content {
