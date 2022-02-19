@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectionList } from '@angular/material/list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatStepper } from '@angular/material/stepper';
-import { catchError, debounceTime, merge, startWith, switchMap, of as observableOf, map } from 'rxjs';
+import { catchError, debounceTime, merge, startWith, switchMap, of as observableOf, map, Subject, Observable } from 'rxjs';
 import { Movie } from '../models/Movie';
+import { MovieLight } from '../models/MovieLight';
 import { RentMovieService } from '../services/rent-movie.service';
 
 @Component({
@@ -30,11 +32,10 @@ export class HomeComponent implements AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
   errorMessage: string;
-  rentedSuccessfull: string;
+  fetchedMoviesList: MovieLight[] = [];
+  showMovies: MovieLight[] = [];
 
-  fetchedMoviesList: Movie[] = [];
-
-  constructor(private rentMovieService: RentMovieService) { }
+  constructor(private rentMovieService: RentMovieService, private _snackBar: MatSnackBar) { }
 
   ngAfterViewInit() {
       merge(this.firstFormGroup.controls["search"].valueChanges.pipe(debounceTime(400)))
@@ -59,16 +60,6 @@ export class HomeComponent implements AfterViewInit {
       )
       .subscribe(data => {
         this.fetchedMoviesList = data;
-
-        if(this.selectedMovies) {
-          let filtered = Object.values(this.selectedMovies).filter((value, index, self) =>
-          index === self.findIndex((t) => (
-            t.movieId === value.movieId
-            ))
-          );
-
-          this.firstFormGroup.controls["selectedMovies"].setValue(filtered);
-        }
       });
     }
 
@@ -78,17 +69,6 @@ export class HomeComponent implements AfterViewInit {
 
     public get selectedIDnumber(): string {
       return this.secondFormGroup.controls["IDnumber"].value;
-    }
-
-     view() {
-      // console.log(this.selectedMovies);
-      // let unique = Object.values(this.selectedMovies).filter((value, index, self) =>
-      //   index === self.findIndex((t) => (
-      //     t.movieId === value.movieId
-      //   ))
-      // )
-      // console.log(unique);
-      // this.firstFormGroup.controls["selectedMovies"].setValue(unique);
     }
 
     nextRentStep(): void {
@@ -149,27 +129,29 @@ export class HomeComponent implements AfterViewInit {
     }
 
     rentMovies(): void {
-      this.isLoadingResults = true;
       this.rentMovieService.rentMovies(this.selectedMovies, this.selectedIDnumber).subscribe((data) => {
         if(data) {
-          this.rentedSuccessfull = "Rent successful!"
-          this.delay(2500).then(() => {
-            this.stepperRent.reset();
-            this.isLoadingResults = false;
+          this._snackBar.open("Rent successful", "OK", {
+            duration: 5000
           });
-          this.errorMessage = "";
+          this.stepperRent.reset();
         }
         else {
-          this.errorMessage = "Unable to rent.";
-          this.rentedSuccessfull = "";
+          this._snackBar.open("Unable to rent", "OK", {
+            duration: 5000
+          });
         }
       });
     }
 
     onRentStepChange(event: any): void {
       if (event.selectedIndex == 2) {
+
+        this.rentMovieService.getShowMovies(this.selectedMovies).subscribe((data) => {
+          this.showMovies = data;
+        })
+
         this.errorMessage = "";
-        this.rentedSuccessfull = "";
       }
     }
 
@@ -179,7 +161,6 @@ export class HomeComponent implements AfterViewInit {
       }
       else if (event.selectedIndex == 2) {
         this.errorMessage = "";
-        this.rentedSuccessfull = "";
       }
     }
 
@@ -190,23 +171,21 @@ export class HomeComponent implements AfterViewInit {
     }
 
     returnMovies(): void {
-      this.isLoadingResults = true;
       let movieList: Movie[] = [];
       this.selection.selectedOptions.selected.forEach(element => {
         movieList.push(element.value);
       });
       this.rentMovieService.returnMovies(movieList, this.selectedIDnumber).subscribe((data) => {
         if(data) {
-          this.rentedSuccessfull = "Return successful!"
-          this.delay(2500).then(() => {
-          this.stepperReturn.reset();
-          this.isLoadingResults = false;
+          this._snackBar.open("Return successful", "OK", {
+            duration: 5000
           });
-          this.errorMessage = "";
+          this.stepperReturn.reset();
         }
         else {
-          this.errorMessage = "Unable to return.";
-          this.rentedSuccessfull = "";
+          this._snackBar.open("Return successful", "OK", {
+            duration: 5000
+          });
         }
       });
     }
