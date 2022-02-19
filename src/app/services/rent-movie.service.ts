@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { Movie } from '../models/Movie';
+import { MovieLight } from '../models/MovieLight';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,21 @@ export class RentMovieService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  getMovies(search: string, idNumber: string): Observable<Movie[]> {
+  getMovies(search: string, idNumber: string): Observable<MovieLight[]> {
     let params = new HttpParams();
     params = params.append('search', search);
     params = params.append('idNumber', idNumber);
 
-    return this._httpClient.get<Movie[]>(this.rentedMoviesUrl + "/Search", {params: params});
+    return this._httpClient.get<MovieLight[]>(this.rentedMoviesUrl + "/Search", {params: params});
+  }
+
+  getShowMovies(movies: any): Observable<MovieLight[]> {
+    let params = new HttpParams();
+    movies.forEach((element: number) => {
+      params = params.append('movies', element);
+    });
+
+    return this._httpClient.get<MovieLight[]>(this.rentedMoviesUrl + "/Show", {params: params});
   }
 
   getRented(idNumber: string): Observable<Movie[]> {
@@ -39,7 +49,10 @@ export class RentMovieService {
   }
 
   rentMovies(selectedMovies: any[], selectedIDnumber: string): Observable<boolean> {
-    let movies = selectedMovies.map(item => item.movieId);
+    let movies: Array<number> = [];
+    selectedMovies.forEach(element => {
+      movies.push(element);
+    });
 
     return this._httpClient.post<boolean>(this.rentedMoviesUrl, {movies, selectedIDnumber}, this.httpOptions);
   }
