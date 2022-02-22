@@ -7,4 +7,5 @@ export interface User {
   maritalStatus: string;
   insertDate: Date;
   deleteDate: Date;
+  profilePicture: string;
 }

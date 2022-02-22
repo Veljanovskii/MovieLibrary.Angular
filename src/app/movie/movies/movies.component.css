@@ -53,8 +53,8 @@ table {
 .mat-column-Avatar {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 6% !important;
-  width: 6% !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -69,8 +69,8 @@ table {
 .mat-column-Caption {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 22% !important;
-  width: 22% !important;
+  flex: 0 0 27% !important;
+  width: 27% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -85,8 +85,8 @@ table {
 .mat-column-Release {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 15% !important;
-  width: 15% !important;
+  flex: 0 0 18% !important;
+  width: 18% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -101,8 +101,8 @@ table {
 .mat-column-Length {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 15% !important;
-  width: 15% !important;
+  flex: 0 0 18% !important;
+  width: 18% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -117,24 +117,8 @@ table {
 .mat-column-Insert {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 22% !important;
-  width: 22% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-.mat-column-Options {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
+  flex: 0 0 27% !important;
+  width: 27% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -190,21 +174,50 @@ table {
 #editMovie {
   background-color:rgba(208, 241, 20, 0.863);
   color: white !important;
-  margin: 2%;
+  margin-left: 5%;
 }
 
 #deleteMovie {
   background-color: rgba(214, 11, 11, 0.877);
   color: white !important;
-  margin: 2%;
+  margin-left: 2%;
 }
 
 .small-preview {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 33px;
 }
 
-.small-preview:hover {
-  width: 183px;
-  height: 275px;
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-description {
+  width: 90%;
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.image-container {
+  padding-right: 6%;
 }

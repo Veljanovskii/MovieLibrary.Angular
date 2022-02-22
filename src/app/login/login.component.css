@@ -1,7 +1,12 @@
 :host {
   display: flex;
-  justify-content: center;
-  margin: 100px 0px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.usersInfo {
+  display: flex;
+  margin-top: 10px;
 }
 
 .mat-card-title {
@@ -11,6 +16,10 @@
 .mat-form-field {
   width: 100%;
   min-width: 300px;
+}
+
+mat-card {
+  margin-top: 50px;
 }
 
 mat-card-title,

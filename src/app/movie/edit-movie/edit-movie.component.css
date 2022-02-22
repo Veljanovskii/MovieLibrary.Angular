@@ -11,11 +11,7 @@ button[disabled]{
 
 mat-form-field {
   width: 250px;
-}
-
-img {
-  width: 133px;
-  height: 200px;
+  margin: 2%;
 }
 
 #cancel{
@@ -25,10 +21,6 @@ img {
 
 ::ng-deep .mat-button-focus-overlay {
   display: none;
-}
-
-mat-form-field {
-  margin: 2%;
 }
 
 .container {

@@ -23,6 +23,7 @@ import { authInterceptorProviders } from 'src/app/interceptors/auth.interceptor'
 import { MatStepperModule } from '@angular/material/stepper';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from 'src/app/user/users/users.component';
@@ -80,7 +81,8 @@ import { HomeComponent } from './home/home.component';
     MatCardModule,
     MatStepperModule,
     NgxMatSelectSearchModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

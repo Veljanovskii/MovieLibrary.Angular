@@ -15,6 +15,8 @@ export class UsersDialogComponent implements OnInit {
   action: Actions;
   user = <User>{};
   index: number;
+  profilePicture: string;
+  message: string;
   validStatus: Array<string> = ['Single', 'Married', 'Divorced', 'Widowed'];
 
   constructor(
@@ -52,6 +54,52 @@ export class UsersDialogComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  onChange(event: any) {
+    const files = event.target.files;
+    if (files.length === 0)
+        return;
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+        this.message = "Only images are supported.";
+        return;
+    }
+
+    this.message = "";
+
+    let src = URL.createObjectURL(files[0]);
+    this.compressImage(src, 200).then(compressed => {
+      this.profilePicture = compressed as string;
+    });
+  }
+
+  compressImage(src: string, maxSideLength: number) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        if(img.width < maxSideLength && img.height < maxSideLength) {
+          res(src);
+        }
+
+        let newX = 0, newY = 0;
+
+        newX = maxSideLength / img.height * img.width;
+        newY = maxSideLength;
+
+        const elem = document.createElement('canvas');
+        elem.width = newX;
+        elem.height = newY;
+        const ctx = elem.getContext('2d');
+        ctx!.drawImage(img, 0, 0, newX, newY);
+        const data = ctx!.canvas.toDataURL();
+        res(data);
+      }
+      img.onerror = error => rej(error);
+    })
+  }
+
   onSubmit() {
     if(this.action == Actions.Add) {
       this.addUser();
@@ -64,11 +112,17 @@ export class UsersDialogComponent implements OnInit {
     if(this.action == Actions.Delete) {
       this.deleteUser();
     }
-
   }
 
   addUser() {
-    this.userService.addUser(this.dialogForm.value).subscribe();
+    this.user.firstName = this.dialogForm.controls['firstName'].value;
+    this.user.lastName = this.dialogForm.controls['lastName'].value;
+    this.user.address = this.dialogForm.controls['address'].value;
+    this.user.idnumber = this.dialogForm.controls['idnumber'].value;
+    this.user.maritalStatus = this.dialogForm.controls['maritalStatus'].value;
+    this.user.profilePicture = this.profilePicture;
+
+    this.userService.addUser(this.user).subscribe();
   }
 
   editUser() {
@@ -77,6 +131,7 @@ export class UsersDialogComponent implements OnInit {
     this.user.address = this.dialogForm.controls['address'].value;
     this.user.idnumber = this.dialogForm.controls['idnumber'].value;
     this.user.maritalStatus = this.dialogForm.controls['maritalStatus'].value;
+    this.user.profilePicture = this.profilePicture;
 
     this.userService.editUser(this.user).subscribe();
   }

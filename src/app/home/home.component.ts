@@ -132,13 +132,15 @@ export class HomeComponent implements AfterViewInit {
       this.rentMovieService.rentMovies(this.selectedMovies, this.selectedIDnumber).subscribe((data) => {
         if(data) {
           this._snackBar.open("Rent successful", "OK", {
-            duration: 5000
+            duration: 5000,
+            panelClass: "snackbar-success"
           });
           this.stepperRent.reset();
         }
         else {
           this._snackBar.open("Unable to rent", "OK", {
-            duration: 5000
+            duration: 5000,
+            panelClass: "snackbar-error"
           });
         }
       });
