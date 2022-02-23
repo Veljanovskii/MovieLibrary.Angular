@@ -180,13 +180,15 @@ export class HomeComponent implements AfterViewInit {
       this.rentMovieService.returnMovies(movieList, this.selectedIDnumber).subscribe((data) => {
         if(data) {
           this._snackBar.open("Return successful", "OK", {
-            duration: 5000
+            duration: 5000,
+            panelClass: "snackbar-success"
           });
           this.stepperReturn.reset();
         }
         else {
           this._snackBar.open("Return successful", "OK", {
-            duration: 5000
+            duration: 5000,
+            panelClass: "snackbar-error"
           });
         }
       });

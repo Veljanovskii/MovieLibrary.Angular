@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SortDirection } from '@angular/material/sort';
-import { catchError, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Movie } from 'src/app/models/Movie';
 import { MoviesCount } from 'src/app/models/MoviesCount';
+import * as global from 'src/global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
-
-  private moviesUrl = 'https://localhost:44371/api/Movie';
+  private moviesUrl = global.hostedAPI + '/Movie';
 
   constructor(private _httpClient: HttpClient) { }
 

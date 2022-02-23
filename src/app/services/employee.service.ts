@@ -4,12 +4,13 @@ import { SortDirection } from '@angular/material/sort';
 import { catchError, Observable, tap } from 'rxjs';
 import { Employee } from '../models/Employee';
 import { EmployeesCount } from '../models/EmployeesCount';
+import * as global from 'src/global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  private employeesUrl = 'https://localhost:44371/api/Employee';
+  private employeesUrl = global.hostedAPI + '/Employee';
 
   constructor(private _httpClient: HttpClient) { }
 

@@ -4,13 +4,13 @@ import { SortDirection } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { UsersCount } from 'src/app/models/UsersCount';
+import * as global from 'src/global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  private usersUrl = 'https://localhost:44371/api/User';
+  private usersUrl = global.hostedAPI + '/User';
 
   constructor(private _httpClient: HttpClient) { }
 
