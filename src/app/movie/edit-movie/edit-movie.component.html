@@ -33,8 +33,8 @@
       <div class="input-container">
         <input type="file" accept="image/*" (change)="onChange($event)">
       </div>
-      <div *ngIf="movie.avatar" class="image-container">
-        <img src={{movie.avatar}}>
+      <div *ngIf="this.avatar" class="image-container">
+        <img src={{this.avatar}}>
         <p>{{message}}</p>
       </div>
     </div>

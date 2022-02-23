@@ -8,19 +8,28 @@ import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
 import { UsersDialogComponent } from 'src/app/user/dialog/users-dialog.component';
 import { Actions } from 'src/app/models/Actions'
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '220px'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class UsersComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['FirstName', 'LastName', 'Address', 'Idnumber', 'MaritalStatus', 'InsertDate', 'Options'];
+  displayedColumns: string[] = ['ProfilePicture', 'FirstName', 'LastName', 'Address', 'Idnumber', 'MaritalStatus', 'InsertDate'];
   data: User[] = [];
   search = new FormControl('');
   loadUsers: Subject<any> = new Subject();
-  dialogAction =  Actions;
+  dialogAction = Actions;
+  expandedElement: User | null;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -66,7 +75,7 @@ export class UsersComponent implements AfterViewInit {
 
   openDialog(action: Actions, obj: any) {
     const dialogRef = this.dialog.open(UsersDialogComponent, {
-      width: '375px',
+      width: action!=3?'610px':'375px',
       data: {
         action: action,
         obj: obj

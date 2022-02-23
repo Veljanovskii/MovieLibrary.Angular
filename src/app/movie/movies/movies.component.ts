@@ -9,17 +9,26 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddMovieComponent } from 'src/app/movie/add-movie/add-movie.component';
 import { EditMovieComponent } from 'src/app/movie/edit-movie/edit-movie.component';
 import { DeleteMovieComponent } from 'src/app/movie/delete-movie/delete-movie.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.css']
+  styleUrls: ['./movies.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '220px'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class MoviesComponent implements AfterViewInit {
-  displayedColumns: string[] = ['Avatar','Caption', 'Release', 'Length', 'Insert', 'Options'];
+  displayedColumns: string[] = ['Avatar','Caption', 'Release', 'Length', 'Insert'];
   data: Movie[] = [];
   search = new FormControl('');
   loadMovies: Subject<any> = new Subject();
+  expandedElement: Movie | null;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -77,11 +86,11 @@ export class MoviesComponent implements AfterViewInit {
     });
   }
 
-  openEditDialog(index: number): void {
+  openEditDialog(movie: Movie): void {
     const dialogEditRef = this.dialogEdit.open(EditMovieComponent, {
       width: '600px',
       data: {
-        movie: this.data[index],
+        movie: movie,
       },
     });
 

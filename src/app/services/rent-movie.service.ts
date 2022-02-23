@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Movie } from '../models/Movie';
 import { MovieLight } from '../models/MovieLight';
+import * as global from 'src/global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentMovieService {
-
-  private rentedMoviesUrl = 'https://localhost:44371/api/RentMovie';
+  private rentedMoviesUrl = global.hostedAPI + '/RentMovie';
 
   constructor(private _httpClient: HttpClient) { }
 

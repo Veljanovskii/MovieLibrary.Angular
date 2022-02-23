@@ -39,6 +39,16 @@
       <mat-error *ngIf="dialogForm.controls['maritalStatus'].invalid">{{getStatusErrorMessage()}}</mat-error>
     </mat-form-field>
 
+    <div class="container">
+      <div class="input-container">
+        <input type="file" accept="image/*" (change)="onChange($event)">
+      </div>
+      <div *ngIf="user.profilePicture || profilePicture" class="image-container">
+        <img src={{this.profilePicture}}>
+        <p>{{message}}</p>
+      </div>
+    </div>
+
     <div mat-dialog-actions>
       <button mat-button color="primary" id="submit" type="submit" [disabled]="!dialogForm.valid" [mat-dialog-close]="true">Submit</button>
       <a id="cancel" mat-button [mat-dialog-close] cdkFocusInitial>Cancel</a>

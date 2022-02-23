@@ -13,8 +13,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 export class EditMovieComponent implements OnInit {
   editForm: FormGroup;
   movie: Movie;
+  avatar: string;
   message: string;
-
 
   constructor(
     private movieService: MovieService,
@@ -45,11 +45,37 @@ export class EditMovieComponent implements OnInit {
 
     this.message = "";
 
-    const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-        this.movie.avatar = reader.result as string;
-    }
+    let src = URL.createObjectURL(files[0]);
+    this.compressImage(src, 200).then(compressed => {
+      this.avatar = compressed as string;
+    });
+  }
+
+  compressImage(src: string, maxSideLength: number) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.src = src;
+
+      img.onload = () => {
+        if(img.width < maxSideLength && img.height < maxSideLength) {
+          res(src);
+        }
+
+        let newX = 0, newY = 0;
+
+        newX = maxSideLength / img.height * img.width;
+        newY = maxSideLength;
+
+        const elem = document.createElement('canvas');
+        elem.width = newX;
+        elem.height = newY;
+        const ctx = elem.getContext('2d');
+        ctx!.drawImage(img, 0, 0, newX, newY);
+        const data = ctx!.canvas.toDataURL();
+        res(data);
+      }
+      img.onerror = error => rej(error);
+    })
   }
 
   editMovie() {
@@ -57,6 +83,7 @@ export class EditMovieComponent implements OnInit {
     this.movie.releaseYear = this.editForm.controls['releaseYear'].value;
     this.movie.movieLength = this.editForm.controls['movieLength'].value;
     this.movie.quantity = this.editForm.controls['quantity'].value;
+    this.movie.avatar = this.avatar;
 
     this.movieService.editMovie(this.movie).subscribe();
   }

@@ -50,6 +50,22 @@ table {
   max-width: 124px;
 }
 
+.mat-column-ProfilePicture {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 10% !important;
+  width: 10% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 .mat-column-FirstName {
   word-wrap: break-word !important;
   white-space: unset !important;
@@ -85,8 +101,8 @@ table {
 .mat-column-Address {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 13% !important;
-  width: 13% !important;
+  flex: 0 0 17% !important;
+  width: 17% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -101,8 +117,8 @@ table {
 .mat-column-IdNumber {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 12% !important;
-  width: 12% !important;
+  flex: 0 0 14% !important;
+  width: 14% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -133,24 +149,8 @@ table {
 .mat-column-InsertDate {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 19% !important;
-  width: 19% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-.mat-column-Options {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
+  flex: 0 0 23% !important;
+  width: 23% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -202,15 +202,53 @@ table {
   align-self: auto;
 }
 
-
 #editUser {
   background-color:rgba(208, 241, 20, 0.863);
   color: white !important;
-  margin: 2%;
+  margin-left: 5%;
 }
 
 #deleteUser {
   background-color: rgba(214, 11, 11, 0.877);
   color: white !important;
-  margin: 2%;
+  margin-left: 2%;
+}
+
+.small-preview {
+  width: 25px;
+  height: 33px;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-description {
+  width: 90%;
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.image-container {
+  padding-right: 6%;
 }

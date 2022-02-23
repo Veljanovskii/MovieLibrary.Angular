@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { TokenInfo } from '../models/TokenInfo';
+import * as global from 'src/global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private loginUrl = global.hostedAPI + '/Login';
 
-  private loginUrl = 'https://localhost:44371/api/Login';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
