@@ -131,7 +131,10 @@ export class UsersDialogComponent implements OnInit {
     this.user.address = this.dialogForm.controls['address'].value;
     this.user.idnumber = this.dialogForm.controls['idnumber'].value;
     this.user.maritalStatus = this.dialogForm.controls['maritalStatus'].value;
-    this.user.profilePicture = this.profilePicture;
+
+    if(this.profilePicture != null) {
+      this.user.profilePicture = this.profilePicture;
+    }
 
     this.userService.editUser(this.user).subscribe();
   }

@@ -83,7 +83,10 @@ export class EditMovieComponent implements OnInit {
     this.movie.releaseYear = this.editForm.controls['releaseYear'].value;
     this.movie.movieLength = this.editForm.controls['movieLength'].value;
     this.movie.quantity = this.editForm.controls['quantity'].value;
-    this.movie.avatar = this.avatar;
+
+    if(this.avatar != null) {
+      this.movie.avatar = this.avatar;
+    }
 
     this.movieService.editMovie(this.movie).subscribe();
   }
